@@ -1,8 +1,7 @@
-#ifndef OOP1_H
-#define OOP1_H
+#pragma once
 
 struct Money {
-    int grn;     
+    int grn; 
     short int kop; 
 };
 
@@ -12,4 +11,3 @@ void roundToNbu(Money& money);
 void printMoney(const Money& money);
 void processFile(const char* fileName);
 
-#endif

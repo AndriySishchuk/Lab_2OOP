@@ -1,6 +1,6 @@
 #include "Header.h"
 #include <iostream>
-#include <fstream>
+#include <cstdio> 
 #include <iomanip>
 
 using namespace std;
@@ -23,18 +23,18 @@ void addPayment(Money& total, Money bonus) {
 }
 
 void scaleMoney(Money& item, int count) {
-    long long allKop = (item.grn * 100LL + item.kop) * count;
-    item.grn = (int)(allKop / 100);
-    item.kop = (short int)(allKop % 100);
+    item.grn *= count;
+    item.kop *= count; 
+    fixMoney(item);    
 }
 
 void roundToNbu(Money& money) {
     int last = money.kop % 10;
     
-    if (last >= 1 && last <= 3) {
+    if (last >= 1 && last <= 4) {
         money.kop -= last;
     } 
-    else if (last >= 4 && last <= 9) {
+    else if (last >= 5) {
         money.kop += (10 - last);
     }
     
@@ -42,14 +42,14 @@ void roundToNbu(Money& money) {
 }
 
 void printMoney(const Money& money) {
-    cout << money.grn << " grn. " 
-         << setfill('0') << setw(2) << money.kop << " kop." << endl;
+    cout << money.grn << " grn. " << setw(2) << setfill('0') <<
+          money.kop << " kop." << endl;
 }
 
 void processFile(const char* fileName) {
-    FILE* f;
-    if (fopen_s(&f, fileName, "r") != 0) {
-        cout << "File not found: " << fileName << endl;
+    FILE* f = fopen(fileName, "r"); 
+    if (!f) {
+        cout << "File not found!" << endl;
         return;
     }
 
@@ -61,7 +61,7 @@ void processFile(const char* fileName) {
         int g, q;
         short int k;
 
-        if (sscanf_s(line, "%s %d %hd %d", name, (unsigned)_countof(name), &g, &k, &q) == 4) {
+        if (sscanf(line, "%s %d %hd %d", name, &g, &k, &q) == 4) {
             if (g < 0 || k < 0 || q < 0) continue;
 
             Money current = { g, k };
