@@ -1,13 +1,12 @@
-#pragma once
+#pragma once 
+#include <vector>
 
-struct Money {
-    int grn; 
-    short int kop; 
+struct Point {
+    double x, y;
 };
 
-void addPayment(Money& total, Money bonus);
-void scaleMoney(Money& item, int count);
-void roundKop(Money& money);
-void printMoney(const Money& money);
-void processFile(const char* fileName);
+bool isDegenerate(Point a, Point b, Point c);
+int checkPointInTriangle(Point a, Point b, Point c, Point p);
+double calculateArea(Point a, Point b, Point c);
+int checkByArea(Point a, Point b, Point c, Point p);
 
