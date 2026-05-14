@@ -10,17 +10,11 @@ int main() {
         return 1;
     }
 
-    if (isDegenerate(a, b, c)) {
-        std::cout << "Трикутник вироджений (площа = 0)." << std::endl;
-        return 1;
-    }
+    Triangle triangle = {a, b, c};
 
-    int choice;
-    std::cout << "\nОберіть метод перевірки:" << std::endl;
-    std::cout << "1 - Метод векторного добутку" << std::endl;
-    std::cout << "2 - Метод площ" << std::endl;
-    std::cout << "Ваш вибір: ";
-    std::cin >> choice;
+    if (isDegenerate(triangle)) {
+        std::cout << "Трикутник вироджений (сприймається як лінія)." << std::endl;
+    }
 
     std::cout << "\nПеревірка точок" << std::endl;
     std::cout << "Введіть координати точки (x y)" << std::endl;
@@ -29,25 +23,21 @@ int main() {
     Point p;
     int count = 1;
     while (std::cout << "Точка №" << count << ": " && std::cin >> p.x >> p.y) {
-        int result;
-        
-        if (choice == 2) {
-            result = checkByArea(a, b, c, p);
-        } else {
-            result = checkPointInTriangle(a, b, c, p);
-        }
-        
-        std::cout << ">> Результат (" << p.x << ", " << p.y << "): ";
-        if (result == 1) {
-            std::cout << "всередині" << std::endl;
-        } else if (result == 2) {
-            std::cout << "на межі" << std::endl;
-        } else {
-            std::cout << "ззовні" << std::endl;
-        }
+
+        int resArea = checkByArea(triangle, p);
+        std::cout << "Метод площ:    ";
+        if (resArea == 1) std::cout << "всередині" << std::endl;
+        else if (resArea == 2) std::cout << "на межі" << std::endl;
+        else std::cout << "зовні" << std::endl;
+
+        int resVector = checkPointInTriangle(triangle, p);
+        std::cout << "Метод векторів: ";
+        if (resVector == 1) std::cout << "всередині" << std::endl;
+        else if (resVector == 2) std::cout << "на межі" << std::endl;
+        else std::cout << "зовні" << std::endl;
+
         count++;
     }
 
-    std::cout << "\nПеревірено точок: " << count - 1 << std::endl;
     return 0;
 }

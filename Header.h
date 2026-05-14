@@ -5,8 +5,11 @@ struct Point {
     double x, y;
 };
 
-bool isDegenerate(Point a, Point b, Point c);
-int checkPointInTriangle(Point a, Point b, Point c, Point p);
-double calculateArea(Point a, Point b, Point c);
-int checkByArea(Point a, Point b, Point c, Point p);
+struct Triangle {
+    Point a, b, c;
+};
 
+bool isDegenerate(Triangle t);
+int checkPointInTriangle(Triangle t, Point p);
+double calculateArea(Point a, Point b, Point c);
+int checkByArea(Triangle t, Point p);
